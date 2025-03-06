@@ -1,5 +1,6 @@
 let api = "http://localhost:4100/api/citizen/";
-let apiEspecie = "http://localhost:4100/api/species/"
+let apiEspecie = "http://localhost:4100/api/especies/"
+let apiRol = "http://localhost:4100/api/roles/"
 let contenido = document.querySelector("#contenido");
 let frmCitizen = document.querySelector("#frmCitizen");
 let btnNuevo = document.querySelector("#btnNuevo");
@@ -36,13 +37,23 @@ function cleanInput(){
   apodo.value = "";
   fecha.value = "";
 };
-function showSpecies(){
+function showEspecies(){
   especie.innerHTML = `<option selected hidden value="0">Seleccione la especie</option>`
   fetch(apiEspecie + "listarespecies")
     .then((res) => res.json())
     .then((res) => {
-      res.species.forEach((especies) => {
+      res.especies.forEach((especies) => {
         especie.innerHTML += `<option value="${especies.idespecie}" >${especies.nombre_especie}</option> `;
+      });
+    });
+}
+function showRoles(){
+  rol.innerHTML = `<option selected hidden value="0">Seleccione el Rol</option>`
+  fetch(apiRol + "listaroles")
+    .then((res) => res.json())
+    .then((res) => {
+      res.roles.forEach((roles) => {
+        rol.innerHTML += `<option value="${roles.idrol}" >${roles.nombre_rol}</option> `;
       });
     });
 }
@@ -69,7 +80,8 @@ function listartodos() {
 }
 document.addEventListener("DOMContentLoaded", () => {
   listartodos();
-  showSpecies()
+  showEspecies();
+  showRoles()
 });
 frmCitizen.addEventListener("submit", (e) => {
   e.preventDefault();
