@@ -1,10 +1,10 @@
 let api = "http://localhost:4100/api/grados/";
 let contenido = document.querySelector("#contenido");
 let btnNuevo = document.querySelector("#btnNuevo");
+let frmGrados = document.querySelector("#frmGrados");
+let grado = document.querySelector("#grado");
+let descripcion = document.querySelector("#descripcion");
 let frmAction = "";
-let frmGrados = document.querySelector("#frmGrados")
-let grado = document.querySelector("#grado")
-let descripcion = document.querySelector("#descripcion")
 const on = (element, event, selector, handler) => {
     element.addEventListener(event, (e) => {
       if (e.target.closest(selector)) {
@@ -26,8 +26,8 @@ function listartodos() {
         res.grados.forEach((grados) => {
           let fila = `<tr>
             <td>${grados.idgrado_delito}</td>
-            <td>${grados.grado_delito}</td>
-            <td>${grados.descripcion_grado}</td>
+            <td>${grados.grado}</td>
+            <td>${grados.descripcion}</td>
             <td><button class="btnBorrar btn btn-danger"><i class="bi bi-trash"></i></button></td>
             <td><button class="btnEditar btn btn-primary"><i class="bi bi-pencil-square"></i></button></td>
             </tr><br>`;
@@ -103,8 +103,8 @@ function listartodos() {
       .then((res) => {
         grados = res.grados[0]
         console.log(grados);
-        grado.value = grados.grado_delito;
-        descripcion.value = grados.descripcion_grado;
+        grado.value = grados.grado;
+        descripcion.value = grados.descripcion;
         frmAction = "editar";
         frmCrearGrado.show();
   })

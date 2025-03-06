@@ -31,8 +31,8 @@ function listartodos() {
           let fila = `<tr>
             <td>${delitos.iddelito}</td>
             <td>${delitos.nombre_delito}</td>
-            <td>${delitos.descripcion_delito}</td>
-            <td>${delitos.grado_delitos}</td>
+            <td>${delitos.descripcion}</td>
+            <td>${delitos.grado_delitos_idgrado_delito}</td>
             <td><button class="btnBorrar btn btn-danger"><i class="bi bi-trash"></i></button></td>
             <td><button class="btnEditar btn btn-primary"><i class="bi bi-pencil-square"></i></button></td>
             </tr><br>`;
@@ -51,7 +51,7 @@ function listartodos() {
       .then((res) => {
         res.grados.forEach((grados) => {
           console.log(grados);
-          grado.innerHTML += `<option value="${grados.idgrado}" >${grados.grado_delito}</option> `;
+          grado.innerHTML += `<option value="${grados.idgrado_delito}" >${grados.grado}</option> `;
         });
       });
   }
