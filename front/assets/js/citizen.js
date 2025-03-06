@@ -1,5 +1,5 @@
 let api = "http://localhost:4100/api/citizen/";
-let apiSpecie = "http://localhost:4100/api/species/"
+let apiEspecie = "http://localhost:4100/api/species/"
 let contenido = document.querySelector("#contenido");
 let frmCitizen = document.querySelector("#frmCitizen");
 let btnNuevo = document.querySelector("#btnNuevo");
@@ -38,12 +38,11 @@ function cleanInput(){
 };
 function showSpecies(){
   especie.innerHTML = `<option selected hidden value="0">Seleccione la especie</option>`
-  fetch(apiSpecie + "listarespecies")
+  fetch(apiEspecie + "listarespecies")
     .then((res) => res.json())
     .then((res) => {
-      res.species.forEach((species) => {
-        console.log(species);
-        especie.innerHTML += `<option value="${species.idespecie}" >${species.nombre_especie}</option> `;
+      res.species.forEach((especies) => {
+        especie.innerHTML += `<option value="${especies.idespecie}" >${especies.nombre_especie}</option> `;
       });
     });
 }
@@ -74,7 +73,6 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 frmCitizen.addEventListener("submit", (e) => {
   e.preventDefault();
-  // crear ciudadano
   if (frmAction === "crear") {
     fetch(api + "crear", {
       method: "POST",
