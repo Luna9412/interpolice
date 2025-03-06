@@ -2,7 +2,7 @@ const express = require("express");
 const bd = require("./bd.js");
 const delitos = express();
 delitos.get("/api/delitos/listartodos", (req, res) => {
-    let query ="SELECT iddelito, nombre_delito, descripcion_delito, idgrado_delitos, idgrado_delito, grado_delito FROM delitos INNER JOIN grado_delitos ON idgrado_delito = idgrado_delitos";
+    let query ="SELECT iddelito, nombre_delito, descripcion_delito, idgrado_delitos, idgrado_delito, grado FROM delitos INNER JOIN grado_delitos ON idgrado_delito = idgrado_delitos";
     bd.query(query, (error, delitos) => {
       if (error) {
         res.send({
@@ -21,7 +21,7 @@ delitos.get("/api/delitos/listartodos", (req, res) => {
   });
   delitos.get("/api/delitos/listarid/:id", (req, res) => {
     let id = req.params.id;
-    let query ="SELECT iddelito, nombre_delito, descripcion_delito, idgrado_delitos, idgrado_delito, grado_delito FROM delitos INNER JOIN grado_delitos ON idgrado_delito = idgrado_delitos WHERE iddelito = ?";
+    let query ="SELECT iddelito, nombre_delito, descripcion_delito, idgrado_delitos, idgrado_delito, grado FROM delitos INNER JOIN grado_delitos ON idgrado_delito = idgrado_delitos WHERE iddelito = ?";
     bd.query(query, [id], (error, delitos)  => {
       if (error) {
         res.send({

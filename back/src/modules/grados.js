@@ -41,8 +41,8 @@ grados.get("/api/grados/listartodos", (req, res) => {
   });
   grados.post("/api/grados/crear", (req, res) => {
   let frmGradosDatos = {
-    grado_delito: req.body.grado,
-    descripcion_grado: req.body.descripcion,
+    grado: req.body.grado,
+    descripcion: req.body.descripcion,
   };
   let query = "INSERT INTO grado_delitos SET ?";
   bd.query(query, [frmGradosDatos], (error, grados) => {
@@ -64,8 +64,8 @@ grados.get("/api/grados/listartodos", (req, res) => {
 grados.put("/api/grados/editar/:id", (req, res) => {
   let id = req.params.id;
   let frmDatos = {
-    grado_delito: req.body.grado,
-    descripcion_grado: req.body.descripcion,
+    grado: req.body.grado,
+    descripcion: req.body.descripcion,
   };
   let query = "UPDATE grado_delitos SET ? WHERE idgrado_delito = ?";
   bd.query(query, [frmDatos, id], (error, grados) => {
