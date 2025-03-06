@@ -1,8 +1,8 @@
+let api = "http://localhost:4100/api/citizen/";
+let apiSpecie = "http://localhost:4100/api/species/"
 let contenido = document.querySelector("#contenido");
 let frmCitizen = document.querySelector("#frmCitizen");
 let btnNuevo = document.querySelector("#btnNuevo");
-
-// ... ... ... ... ... ... ... ... ... ... ... ... ... //
 let nombre = document.querySelector("#nombre");
 let apellido = document.querySelector("#apellido");
 let apodo = document.querySelector("#apodo");
@@ -12,14 +12,7 @@ let fecha = document.querySelector("#fecha");
 let especie = document.querySelector("#especie");
 let rol = document.querySelector("#rol");
 let foto = document.querySelector("#foto");
-
-// ... ... ... ... ... ... ... ... ... ... ... ... ... //
-
-let api = "http://localhost:4100/api/citizen/";
-let apiSpecie = "http://localhost:4100/api/species/"
-
 let frmAction = "";
-
 const on = (element, event, selector, handler) => {
   element.addEventListener(event, (e) => {
     if (e.target.closest(selector)) {
@@ -27,19 +20,14 @@ const on = (element, event, selector, handler) => {
     }
   });
 };
-
-// carga la modal
 const frmCrearCitizen = new bootstrap.Modal(
   document.getElementById("frmCrearCitizen")
 );
-
-// disparar la modal
 btnNuevo.addEventListener("click", () => {
   cleanInput()
   frmAction = "crear";
   frmCrearCitizen.show();
 });
-
 function cleanInput(){
   let idform = "";
   nombre.value = "";
@@ -47,8 +35,7 @@ function cleanInput(){
   email.value = "";
   apodo.value = "";
   fecha.value = "";
-}
-
+};
 function showSpecies(){
   especie.innerHTML = `<option selected hidden value="0">Seleccione la especie</option>`
   fetch(apiSpecie + "listarespecies")
@@ -60,9 +47,6 @@ function showSpecies(){
       });
     });
 }
-
-
-// mostrar elementos en la tabla
 function listartodos() {
   fetch(api + "listartodos")
     .then((res) => res.json())
@@ -84,13 +68,10 @@ function listartodos() {
       });
     });
 }
-
 document.addEventListener("DOMContentLoaded", () => {
   listartodos();
   showSpecies()
 });
-
-// boton submit
 frmCitizen.addEventListener("submit", (e) => {
   e.preventDefault();
   // crear ciudadano
@@ -119,15 +100,12 @@ frmCitizen.addEventListener("submit", (e) => {
         location.reload();
       });
   }
-
-  // editar ciudadano
   if (frmAction === "editar") {
     fetch(api + "editar/" + idform, {
       method: "PUT",
       headers: {
         "content-type": "application/json",
       },
-
         body: JSON.stringify({
         nombre: nombre.value,
         apellido: apellido.value,
@@ -150,7 +128,6 @@ frmCitizen.addEventListener("submit", (e) => {
   }
   frmCrearCitizen.hide();
 });
-
 on(document, "click", ".btnBorrar", (e) => {
   let fila = e.target.parentNode.parentNode.parentNode;
   let idform = fila.firstElementChild.innerText;
@@ -169,9 +146,7 @@ on(document, "click", ".btnBorrar", (e) => {
       });
   }
 });
-
 let idform = "";
-// llamar formulario de edición
 on(document, "click", ".btnEditar", (e) => {
   let fila = e.target.parentNode.parentNode.parentNode;
   let idciudadano = fila.children[0].innerText;
@@ -180,7 +155,6 @@ on(document, "click", ".btnEditar", (e) => {
   .then((res) => res.json())
     .then((res) => {
       citizen = res.citizen[0]
-      console.log(citizen);
       nombre.value = citizen.nombre_ciudadano;
       apellido.value = citizen.apellido_ciudadano;
       email.value = citizen.email_ciudadano;

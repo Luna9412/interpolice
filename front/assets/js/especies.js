@@ -76,13 +76,10 @@ frmEspecies.addEventListener("submit", (e) => {
   }
   frmCrearEspecie.hide();
 });
-
 on(document, "click", ".btnBorrar", (e) => {
   let fila = e.target.parentNode.parentNode.parentNode;
   let idform = fila.firstElementChild.innerText;
-  let respuesta = window.confirm(
-    `seguro que desea eliminar el registro con id: ${idform}`
-  );
+  let respuesta = window.confirm(`seguro que desea eliminar el registro con id: ${idform}`);
   if (respuesta) {
     fetch(api + "borrar/" + idform, {
       method: "DELETE",

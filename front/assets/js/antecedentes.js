@@ -1,11 +1,8 @@
-console.log("hello world");
-
 let api = "http://localhost:4100/api/antecedentes/";
 let contenido = document.querySelector("#contenido");
 let btnNuevo = document.querySelector("#btnNuevo");
 let frmAction = "";
 let frmAnt = document.querySelector("#frmAnt")
-
 const on = (element, event, selector, handler) => {
     element.addEventListener(event, (e) => {
       if (e.target.closest(selector)) {
@@ -13,19 +10,13 @@ const on = (element, event, selector, handler) => {
       }
     });
   };
-
-// carga la modal
 const frmCrearAnt = new bootstrap.Modal(
     document.getElementById("frmCrearAnt")
   );
-
-// disparar la modal
 btnNuevo.addEventListener("click", () => {
     frmAction = "crear";
     frmCrearAnt.show();
   });
-
-  //mostrar elementos en la tabla
 function listartodos() {
     fetch(api + "listartodos")
       .then((res) => res.json())
@@ -42,15 +33,11 @@ function listartodos() {
         });
       });
   }
-  
   window.addEventListener("DOMContentLoaded", (e) => {
     listartodos();
   });
-  
-  // boton submit
   frmAnt.addEventListener("submit", (e) => {
     e.preventDefault();
-    // crear 
     if (frmAction === "crear") {
       fetch(api + "crear", {
         method: "POST",
@@ -70,15 +57,12 @@ function listartodos() {
           location.reload();
         });
     }
-  
-    // editar ciudadano
     if (frmAction === "editar") {
       fetch(api + "editar", {
         method: "PUT",
         headers: {
           "content-type": "application/json",
         },
-  
         body: JSON.stringify({
             fecha: fecha.value,
           ciudadano: ciudadano.value,
@@ -95,15 +79,11 @@ function listartodos() {
     }
     frmCrearAnt.hide();
   });
-  
   on(document, "click", ".btnBorrar", (e) => {
     let fila = e.target.parentNode.parentNode.parentNode;
     let idform = fila.firstElementChild.innerText;
-    let respuesta = window.confirm(
-      `seguro que desea eliminar el registro con id: ${idform}`
-    );
+    let respuesta = window.confirm(`seguro que desea eliminar el registro con id: ${idform}`);
     console.log(idform);
-  
     if (respuesta) {
       fetch(api + "borrar/" + idform, {
         method: "DELETE",
@@ -114,8 +94,6 @@ function listartodos() {
         });
     }
   });
-  
-  // llamar formulario de edición
   let idform = "";
   on(document, "click", ".btnEditar", (e) => {
     let fila = e.target.parentNode.parentNode.parentNode;

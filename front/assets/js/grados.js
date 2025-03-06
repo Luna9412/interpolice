@@ -12,17 +12,13 @@ const on = (element, event, selector, handler) => {
       }
     });
   };
-
-// carga la modal
 const frmCrearGrado = new bootstrap.Modal(
     document.getElementById("frmCrearGrado")
   );
-// disparar la modal
 btnNuevo.addEventListener("click", () => {
     frmAction = "crear";
     frmCrearGrado.show();
   });
-   //mostrar elementos en la tabla
 function listartodos() {
     fetch(api + "listartodos")
       .then((res) => res.json())
@@ -42,10 +38,8 @@ function listartodos() {
   window.addEventListener("DOMContentLoaded", (e) => {
     listartodos();
   });
-  // boton submit
   frmGrados.addEventListener("submit", (e) => {
     e.preventDefault();
-    // crear ciudadano
     if (frmAction === "crear") {
       fetch(api + "crear", {
         method: "POST",
@@ -64,7 +58,6 @@ function listartodos() {
           location.reload();
         });
     }
-    // editar ciudadano
     if (frmAction === "editar") {
       fetch(api + "editar/" + idform, {
         method: "PUT",
@@ -89,10 +82,7 @@ function listartodos() {
   on(document, "click", ".btnBorrar", (e) => {
     let fila = e.target.parentNode.parentNode.parentNode;
     let idform = fila.firstElementChild.innerText;
-    let respuesta = window.confirm(
-      `seguro que desea eliminar el registro con id: ${idform}`
-    );
-    console.log(idform);
+    let respuesta = window.confirm(`seguro que desea eliminar el registro con id: ${idform}`);
     if (respuesta) {
       fetch(api + "borrar/" + idform, {
         method: "DELETE",
@@ -103,7 +93,6 @@ function listartodos() {
         });
     }
   });
-  // llamar formulario de edición
   let idform = "";
   on(document, "click", ".btnEditar", (e) => {
     let fila = e.target.parentNode.parentNode.parentNode;

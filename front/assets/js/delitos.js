@@ -1,15 +1,12 @@
 let api = "http://localhost:4100/api/delitos/";
 let apigrado = "http://localhost:4100/api/grados/";
-
 let contenido = document.querySelector("#contenido");
 let btnNuevoDelito = document.querySelector("#btnNuevoDelito");
 let frmAction = "";
 let frmDelitos = document.querySelector("#frmDelitos")
-
 let nombre = document.querySelector("#nombre")
 let grado = document.querySelector("#grado")
 let descripcion = document.querySelector("#descripcion")
-
 const on = (element, event, selector, handler) => {
     element.addEventListener(event, (e) => {
       if (e.target.closest(selector)) {
@@ -17,21 +14,15 @@ const on = (element, event, selector, handler) => {
       }
     });
   };
-
-// carga la modal
 const frmCrearDelito = new bootstrap.Modal(
     document.getElementById("frmCrearDelito")
   );
-
-// disparar la modal
 btnNuevoDelito.addEventListener("click", () => {
     nombre.value = "";
     descripcion.value = "";
     frmAction = "crear";
     frmCrearDelito.show();
   });
-
-  //mostrar elementos en la tabla
 function listartodos() {
     fetch(api + "listartodos")
       .then((res) => res.json())
@@ -49,12 +40,10 @@ function listartodos() {
         });
       });
   }
-  
   window.addEventListener("DOMContentLoaded", (e) => {
     listartodos();
     showgrados()
   });
-
   function showgrados(){
     grado.innerHTML += `<option selected hidden value="0">Seleccione el grado</option>`
     fetch(apigrado + "listartodos")
@@ -66,11 +55,8 @@ function listartodos() {
         });
       });
   }
-  
-  // boton submit
   frmDelitos.addEventListener("submit", (e) => {
     e.preventDefault();
-    // crear ciudadano
     if (frmAction === "crear") {
       fetch(api + "crear", {
         method: "POST",
@@ -90,15 +76,12 @@ function listartodos() {
           location.reload();
         });
     }
-  
-    // editar ciudadano
     if (frmAction === "editar") {
       fetch(api + "editar/" + idform, {
         method: "PUT",
         headers: {
           "content-type": "application/json",
         },
-  
         body: JSON.stringify({
             nombre: nombre.value,
             descripcion: descripcion.value,
@@ -115,15 +98,10 @@ function listartodos() {
     }
     frmCrearDelito.hide();
   });
-  
   on(document, "click", ".btnBorrar", (e) => {
     let fila = e.target.parentNode.parentNode.parentNode;
     let idform = fila.firstElementChild.innerText;
-    let respuesta = window.confirm(
-      `seguro que desea eliminar el registro con id: ${idform}`
-    );
-    console.log(idform);
-  
+    let respuesta = window.confirm(`seguro que desea eliminar el registro con id: ${idform}`);
     if (respuesta) {
       fetch(api + "borrar/" + idform, {
         method: "DELETE",
@@ -134,8 +112,6 @@ function listartodos() {
         });
     }
   });
-  
-  // llamar formulario de edición
   let idform = "";
   on(document, "click", ".btnEditar", (e) => {
     let fila = e.target.parentNode.parentNode.parentNode;

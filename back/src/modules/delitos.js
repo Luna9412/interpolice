@@ -1,10 +1,8 @@
 const express = require("express");
 const bd = require("./bd.js");
 const delitos = express();
-
 delitos.get("/api/delitos/listartodos", (req, res) => {
-    let query =
-      "SELECT iddelito, nombre_delito, descripcion_delito, idgrado_delitos, idgrado_delito, grado_delito FROM delitos INNER JOIN grado_delitos ON idgrado_delito = idgrado_delitos";
+    let query ="SELECT iddelito, nombre_delito, descripcion_delito, idgrado_delitos, idgrado_delito, grado_delito FROM delitos INNER JOIN grado_delitos ON idgrado_delito = idgrado_delitos";
     bd.query(query, (error, delitos) => {
       if (error) {
         res.send({
@@ -21,11 +19,9 @@ delitos.get("/api/delitos/listartodos", (req, res) => {
       }
     });
   });
-
   delitos.get("/api/delitos/listarid/:id", (req, res) => {
     let id = req.params.id;
-    let query =
-      "SELECT iddelito, nombre_delito, descripcion_delito, idgrado_delitos, idgrado_delito, grado_delito FROM delitos INNER JOIN grado_delitos ON idgrado_delito = idgrado_delitos WHERE iddelito = ?";
+    let query ="SELECT iddelito, nombre_delito, descripcion_delito, idgrado_delitos, idgrado_delito, grado_delito FROM delitos INNER JOIN grado_delitos ON idgrado_delito = idgrado_delitos WHERE iddelito = ?";
     bd.query(query, [id], (error, delitos)  => {
       if (error) {
         res.send({
@@ -42,18 +38,13 @@ delitos.get("/api/delitos/listartodos", (req, res) => {
       }
     });
   });
-
   delitos.post("/api/delitos/crear", (req, res) => {
   let frmDelitosDatos = {
     nombre_delito: req.body.nombre,
     descripcion_delito: req.body.descripcion,
     idgrado_delitos: req.body.grado,
   };
-
-  // hacemos la consulta
-
-  let query = "INSERT INTO delitos SET ?";
-
+  let query ="INSERT INTO delitos SET ?";
   bd.query(query, [frmDelitosDatos], (error, delitos) => {
     if (error) {
       res.send({
@@ -70,9 +61,6 @@ delitos.get("/api/delitos/listartodos", (req, res) => {
     }
   });
 });
-
-// editar ciudadano
-
 delitos.put("/api/delitos/editar/:id", (req, res) => {
   let id = req.params.id;
   let frmDatos = {
@@ -80,9 +68,7 @@ delitos.put("/api/delitos/editar/:id", (req, res) => {
     descripcion_delito: req.body.descripcion,
     idgrado_delitos: req.body.grado,
   };
-
-  let query = "UPDATE delitos SET ? WHERE iddelito = ?";
-
+  let query ="UPDATE delitos SET ? WHERE iddelito = ?";
   bd.query(query, [frmDatos, id], (error, delitos) => {
     if (error) {
       res.send({
@@ -99,11 +85,9 @@ delitos.put("/api/delitos/editar/:id", (req, res) => {
     }
   });
 });
-
 delitos.delete("/api/delitos/borrar/:id", (req, res) => {
   let id = req.params.id;
-  let consulta = "DELETE FROM delitos WHERE iddelito = ?";
-
+  let consulta ="DELETE FROM delitos WHERE iddelito = ?";
   bd.query(consulta, [id], (error, delitos) => {
     if (error) {
       res.send({
@@ -120,5 +104,4 @@ delitos.delete("/api/delitos/borrar/:id", (req, res) => {
     }
   });
 }); 
-
 module.exports = delitos;
